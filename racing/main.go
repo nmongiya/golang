@@ -3,9 +3,9 @@ package main
 import (
 	"database/sql"
 	"flag"
-	"git.neds.sh/matty/entain/racing/db"
-	"git.neds.sh/matty/entain/racing/proto/racing"
-	"git.neds.sh/matty/entain/racing/service"
+	"entain-master/racing/db"
+	"entain-master/racing/proto/racing"
+	"entain-master/racing/service"
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"net"

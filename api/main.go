@@ -6,9 +6,7 @@ import (
 	"net/http"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"git.neds.sh/matty/entain/api/proto/racing"
 	log "github.com/sirupsen/logrus"
-	"google.golang.org/grpc"
 )
 
 var (
@@ -30,14 +28,14 @@ func run() error {
 	defer cancel()
 
 	mux := runtime.NewServeMux()
-	if err := racing.RegisterRacingHandlerFromEndpoint(
-		ctx,
-		mux,
-		*grpcEndpoint,
-		[]grpc.DialOption{grpc.WithInsecure()},
-	); err != nil {
-		return err
-	}
+	// if err := racing.RegisterRacingHandlerFromEndpoint(
+	// 	ctx,
+	// 	mux,
+	// 	*grpcEndpoint,
+	// 	[]grpc.DialOption{grpc.WithInsecure()},
+	// ); err != nil {
+	// 	return err
+	// }
 
 	log.Infof("API server listening on: %s", *apiEndpoint)
 

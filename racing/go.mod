@@ -1,4 +1,4 @@
-module git.neds.sh/matty/entain/racing
+module entain-master/racing
 
 go 1.16
 
