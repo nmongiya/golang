@@ -2,13 +2,14 @@ package db
 
 import (
 	"database/sql"
-	"github.com/golang/protobuf/ptypes"
-	_ "github.com/mattn/go-sqlite3"
 	"strings"
 	"sync"
 	"time"
 
-	"git.neds.sh/matty/entain/racing/proto/racing"
+	"github.com/golang/protobuf/ptypes"
+	_ "github.com/mattn/go-sqlite3"
+
+	"entain-master/racing/proto/racing"
 )
 
 // RacesRepo provides repository access to races.
@@ -18,6 +19,7 @@ type RacesRepo interface {
 
 	// List will return a list of races.
 	List(filter *racing.ListRacesRequestFilter) ([]*racing.Race, error)
+	GetRace(id int64) ([]*racing.Race, error)
 }
 
 type racesRepo struct {
@@ -40,6 +42,25 @@ func (r *racesRepo) Init() error {
 	})
 
 	return err
+}
+
+func (r *racesRepo) GetRace(id int64) ([]*racing.Race, error) {
+
+	var (
+		err   error
+		query string
+		args  []interface{}
+	)
+
+	query = "SELECT id, meeting_id, name, number, visible,advertised_start_time FROM races where id=?"
+	args = append(args, id)
+	rows, err := r.db.Query(query, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return r.scanRaces(rows)
+
 }
 
 func (r *racesRepo) List(filter *racing.ListRacesRequestFilter) ([]*racing.Race, error) {
